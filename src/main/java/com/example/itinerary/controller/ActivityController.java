@@ -2,6 +2,7 @@ package com.example.itinerary.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ public class ActivityController {
     private ActivityRepository activityRepository;
     private InMemorySelectedActivitiesService inMemorySelectedActivitiesService;
 
+    @Autowired
     public ActivityController(ActivityRepository activityRepository,InMemorySelectedActivitiesService inMemorySelectedActivitiesService){
         this.activityRepository=activityRepository;
         this.inMemorySelectedActivitiesService=inMemorySelectedActivitiesService;
@@ -48,7 +50,8 @@ public class ActivityController {
         try{
             List<String> selectedActivities=activitySelectionRequest.getSelectedActivities();
             String userId=activitySelectionRequest.getUserId();
-            inMemorySelectedActivitiesService.updateSelections(userId, selectedActivities);
+            String locationId=activitySelectionRequest.getLocationId();
+            inMemorySelectedActivitiesService.updateSelections(userId, selectedActivities,locationId);
             return ResponseEntity.status(200).body(new ApiResponse<>(null, "Stored successfully", true));
         }
         catch(Exception e){

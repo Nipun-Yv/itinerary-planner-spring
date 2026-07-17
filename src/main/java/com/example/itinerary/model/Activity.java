@@ -22,7 +22,23 @@ public class Activity {
     
     private double latitude;
     private double longitude;
+    private double rating;
+    @Column(name = "user_rating_count")
+    private int user_rating_count;
 
+    public int getUserRatingCount(){
+        return user_rating_count;
+    }
+    public void setUserRatingCount(int count){
+        this.user_rating_count=count;
+    }
+    public double getRating(){
+        return rating;
+    }
+
+    public void setRating(double rating){
+        this.rating=rating;
+    }
     public String getId() {
         return id;
     }
